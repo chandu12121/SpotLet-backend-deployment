@@ -11,7 +11,7 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 const PORT = 5004;
-const MONGO_URI ="mongodb+srv://chandu12121:9182500800Ac@cluster0.vm2zu.mongodb.net/bookstore?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URI ="mongodb+srv://chandu12121:<password>@cluster0.vm2zu.mongodb.net/bookstore?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
