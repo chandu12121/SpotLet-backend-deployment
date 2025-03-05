@@ -12,8 +12,15 @@ app.use("/uploads", express.static("uploads"));
 
 const PORT = 5004;
 
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri) {
+  console.error("MONGO_URI is not defined. Check your .env file.");
+  process.exit(1); 
+}
+
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
