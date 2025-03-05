@@ -11,21 +11,20 @@ app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 const PORT = 5004;
-const MONGO_URI ="mongodb+srv://chandu12121:9182500800Ac@cluster0.vm2zu.mongodb.net/bookstore?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("MongoDB connection error:", err));
 
-  const bookSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    price: Number,
-    imageUrl: String,
-    createdAt: { type: Date, default: Date.now },
-  });
-  
+const bookSchema = new mongoose.Schema({
+  title: String,
+  author: String,
+  price: Number,
+  imageUrl: String,
+  createdAt: { type: Date, default: Date.now },
+});
+
 const Book = mongoose.model("Book", bookSchema);
 
 const storage = multer.diskStorage({
@@ -77,7 +76,6 @@ app.get("/search", async (req, res) => {
   }
 });
 
-
 app.post("/", async (req, res) => {
   try {
     const { title, author, price, imageUrl } = req.body;
@@ -89,7 +87,6 @@ app.post("/", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.get("/", async (req, res) => {
   try {
@@ -112,7 +109,7 @@ app.get("/:id", async (req, res) => {
 
 app.put("/:id", async (req, res) => {
   try {
-    const { title, author, price, imageUrl } = req.body; 
+    const { title, author, price, imageUrl } = req.body;
 
     const updatedBook = await Book.findByIdAndUpdate(
       req.params.id,
@@ -124,7 +121,6 @@ app.put("/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.delete("/:id", async (req, res) => {
   try {
