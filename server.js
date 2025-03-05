@@ -5,6 +5,9 @@ const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 
+
+
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -13,6 +16,7 @@ app.use("/uploads", express.static("uploads"));
 const PORT = 5004;
 
 const mongoUri = process.env.MONGO_URI;
+console.log("MONGO_URI:", mongoUri);
 
 if (!mongoUri) {
   console.error("MONGO_URI is not defined. Check your .env file.");
